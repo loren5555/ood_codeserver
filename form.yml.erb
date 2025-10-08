@@ -29,8 +29,8 @@
     data_pairs << "data-label-cpus: 'CPU Cores (1-#{cpu_max})'"
     data_pairs << "data-max-cpus: #{cpu_max}"
 
-    data_pairs << "data-label-memory: 'Memory (GB, 1-#{mem_max})'"
-    data_pairs << "data-max-memory: #{mem_max}"
+    # data_pairs << "data-label-memory: 'Memory (GB, 1-#{mem_max})'"
+    # data_pairs << "data-max-memory: #{mem_max}"
 
     if gpu_max <= 0
       data_pairs << "data-hide-gpus: true"
@@ -58,10 +58,8 @@ form:
   - resource_type
   - cpus
   - gpus
-  # - memory
   - bc_num_hours
   - working_dir
-  # - modules
   - bc_account
   - bc_email_on_started
 
@@ -119,9 +117,10 @@ attributes:
     display: true
 
   working_dir:
-    label: "Working Directory"
     widget: "path_selector"
-    value: "$HOME"
+    label: "Working Directory"
+    cacheable: false
+    directory: "<%= ENV['HOME'] %>"
     display: true
 
   modules:
