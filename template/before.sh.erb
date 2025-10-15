@@ -1,15 +1,19 @@
-# Export the module function if it exists
+#!/bin/bash
+# This script is sourced before script.sh is forked. Based on OOD's official example.
+# We add: PATH (/opt), optional Lmod init, optional Conda activation, working_dir.
+
+set -e
+
+# --- (A) Export 'module' if present (same as official) ---
 [[ $(type -t module) == "function" ]] && export -f module
 
-export PATH="/opt/code-server/code-server-4.104.2-linux-amd64/bin:$PATH"
 
-# Find available port to run server on
-export port=$(find_port ${host})
+# --- (F) Find an available port (official helper) ---
+port=$(find_port)
+uname="$(create_passwd 16)"
+password="$(create_passwd 16)"
 
-# Export compute node the script is running on
-export host="${host}"
-
-# Generate SHA1 encrypted password (requires OpenSSL installed)
-export password="$(create_passwd 16)"
-
-export code_server_version="4.104.2"
+# --- (K) Export connection secrets for the view (script.sh will emit them) ---
+export port
+export uname
+export password
